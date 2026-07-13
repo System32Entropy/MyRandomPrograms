@@ -1,4 +1,3 @@
-;option casemap:none
 ;extern ExitProcess:PROC ;Used for Debugging
 
 .code
@@ -142,7 +141,6 @@ xor rdx, rdx
 mov qword ptr [rsp - 78h], 0
 
 lea r9, [rsp - 78h] 
-;mov qword ptr [r9], 0
 lea r8, [rsp]               ; UNICODE_STRING*
 
 sub rsp, 20h                  ; shadow space
