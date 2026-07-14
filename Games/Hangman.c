@@ -7,12 +7,13 @@
 	void manMenu();
 	void playHangman();
 
-	const char *words[500] = {"arise", "vixen", "wheat", "press", "prude", "guide", "defog", "genre", "lived", "scale", "false", "twirl", "catty", "nifty", "haven", "pesky", "karma", "hedge", "arise", "music", "jolly", "alone", "bleak", "speed", "rigor", "noah", "balls", "star", "why", "bye", "dad", "who", "gem", "jam", "old", "owl", "art", "booger", "poop", "cheese", "fly", "map", "baby" };
+	const char *wordlist[500] = {"arise", "vixen", "wheat", "press", "prude", "guide", "defog", "genre", "lived", "scale", "false", "twirl", "catty", "nifty", "haven", "pesky", "karma", "hedge", "arise", "music", "jolly", "alone", "bleak", "speed", "rigor", "noah", "balls", "star", "why", "bye", "dad", "who", "gem", "jam", "old", "owl", "art", "booger", "poop", "cheese", "fly", "map", "baby" };
+	size_t words= sizeof(wordlist) / sizeof(wordlist[0]);
 
 	void instructions() {
 		char input[100];
 		printf("\n");
-		printf("Your goal is to find all the letter to figure\n");
+		printf("Your goal is to find all the letters to figure\n");
 		printf("out the word. You will get 6 tries to guess the word.\n");
 		printf("\n");	
 		printf("Press Enter to continue. ");
@@ -104,10 +105,10 @@
 		printf(" Try to guess the word!\n");
 		printf("------------------------\n");
 		printf("\n");
-		words[0];
+		wordlist[0];
 		srand(time(NULL));	
 		int picker = rand() % 30;
-		const char *pickedWord = words[picker];
+		const char *pickedWord = wordlist[picker];
 		size_t length = strlen(pickedWord);
 		for (int i = 0; i < length; i++) {
 			letters[i] = pickedWord[i];
