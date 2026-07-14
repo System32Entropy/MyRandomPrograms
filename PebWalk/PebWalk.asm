@@ -16,12 +16,12 @@ mov rcx, [rax + 18h] ;Ldr
 mov rdx, [rcx + 10h] ;InLoadOrderModuleList first entry
 
 test rcx, rcx ;Test if valid
-jz Fail
+jz End
 
 ModuleLoop:
 mov rcx, [rdx + 30h] ;Get base
 test rcx, rcx
-jz Fail
+jz End
 
 movsxd rax, dword ptr [rcx + 3Ch] ;Get e_lfanew (PE header offset)
 mov r10, rcx                      ;Save module base in r10
@@ -52,7 +52,7 @@ jmp ModuleLoop       ;Continue loop
 FoundDLL:
 test r8, r8          ;Check if Export Directory valid
 add rsp, 28h
-jz Fail
+jz End
 
 ;======================End of finding NTDLL======================
 
@@ -105,7 +105,7 @@ jmp FindDLL
 
 DLLNotFound:
 xor rax, rax
-jmp Fail
+jmp End
 
 ;======================End of finding LdrLoadDLL======================
 
@@ -150,7 +150,7 @@ mov r8, [rsp - 78h] ;r8 contains base address of user32.dll
 mov rcx, r8
 mov rbx, rcx
 test r8, r8
-jz Fail
+jz End
 
 ;======================End of loading USER32.DLL======================
 
@@ -212,7 +212,7 @@ jmp FindFunction
 
 FunctionNotFound:
 xor rax, rax
-jmp Fail
+jmp End
 
 ;======================End of loading MessageBoxA======================
 
@@ -269,19 +269,15 @@ call rbx               ;Call Message Box!
 ;======================End of activating MessageBoxA======================
 
 
+End:
+mov  rsp, r12
+pop  r12
+ret
+
+
 ;Success:
 ;mov rcx, 1h               ; ExitCode = 1
 ;call ExitProcess
-
-Success:
-mov  rsp, r12
-pop  r12
-ret
-
-Fail:
-mov  rsp, r12
-pop  r12
-ret
 
 ;Fail:
 ;xor rcx, rcx               ; ExitCode = 0
